@@ -1,18 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useContext } from 'react'
+import {
+  Router,
+  Route,
+} from "react-router-dom";
 import './App.css'
-import Authentication from './pages/Authentication'
+import SignIn from './pages/SignIn'
+import { AuthContext } from "./AuthContext";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const authContext = useContext(AuthContext);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
-    <>
-      <div>
-        <Authentication />
-      </div>
-    </>
+    <Router>
+      {isAuthenticated ? (
+        <Route path="/" element={<Home />} />
+      ) : (
+        <Route path="/" element={<SignIn />} />
+      )}
+    </Router>
   )
 }
 
